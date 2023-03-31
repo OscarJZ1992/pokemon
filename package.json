@@ -1,6 +1,11 @@
 {
   "name": "pokemon-app",
   "version": "0.0.0",
+  "autor": "Oscar Jimenez",
+  "correo": "oscarjimenez1992@gmail.com",
+  "engines": {
+    "node": "18.15.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

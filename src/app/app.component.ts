@@ -7,15 +7,14 @@ import { ServicesService } from './services/pokemon.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'pokemon_app';
-  routes: ROUTES[]=[]
+  routes: ROUTES[] = []
 
-  constructor(private service: ServicesService){}
+  constructor(private service: ServicesService) { }
 
-  getRoutes(){
+  getRoutes() {
     this.routes = this.service.getRoutes()
-    console.log(this.routes)
   }
 
   ngOnInit(): void {

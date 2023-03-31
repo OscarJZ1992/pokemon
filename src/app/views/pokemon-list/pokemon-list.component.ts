@@ -24,9 +24,9 @@ export class PokemonListComponent implements OnInit {
   totalPages: any[] = []
   itemsTypes: any[] = []
   searchPokemon: string = ""
-  pokemonListBattle: POKEMON_DATA[]=[]
+  pokemonListBattle: POKEMON_DATA[] = []
 
-  constructor(private helper: HelperPokemon){}
+  constructor(private helper: HelperPokemon) { }
 
   /**
    * get all pokemons
@@ -34,31 +34,31 @@ export class PokemonListComponent implements OnInit {
    * @param limit 
    */
   private getListPokemon = (offset: number, limit: number): void => {
-    this.helper.getListPokemon(offset,limit).subscribe(data => {
+    this.helper.getListPokemon(offset, limit).subscribe(data => {
       this.listPokemon = data?.results
       this.getIdsPokemon(this.listPokemon)
       this.getDetailPokemon(this.listPokemon)
     })
   }
 
-  private getIdsPokemon = (listPokemon: POKEMON_DATA[]) =>{
+  private getIdsPokemon = (listPokemon: POKEMON_DATA[]) => {
     this.listPokemon = this.helper.getIdByPokemon(listPokemon)
     this.getTotalPages(this.listPokemon.length / 10)
   }
 
-  private getTotalPages(size: number){
-    for(let i = 1; i<= size; i++){
+  private getTotalPages(size: number) {
+    for (let i = 1; i <= size; i++) {
       this.totalPages.push(i)
     }
   }
 
-  public getItems(): POKEMON_DATA[]{
+  public getItems(): POKEMON_DATA[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return this.filterPokemonList(startIndex, endIndex);
   }
 
-  private filterPokemonList(startIndex: number, endIndex: number){
+  private filterPokemonList(startIndex: number, endIndex: number) {
     return this.listPokemon.filter(item => item.name.toLowerCase().includes(this.searchPokemon?.toLowerCase() || '')).slice(startIndex, endIndex)
   }
 
@@ -66,7 +66,7 @@ export class PokemonListComponent implements OnInit {
    * getDetail by list pokemon
    * @param listPokemon 
    */
-  public getDetailPokemon(listPokemon: POKEMON_DATA[]){
+  public getDetailPokemon(listPokemon: POKEMON_DATA[]) {
     this.helper.getDetailPokemon(listPokemon).subscribe(results => {
       this.helper.getTypesPokemon(this.listPokemon, results)
     })
@@ -76,14 +76,14 @@ export class PokemonListComponent implements OnInit {
    * Recived event from app-card child
    * @param listPokemons 
    */
-  public getPokemonToBattle(listPokemons: any){
+  public getPokemonToBattle(listPokemons: any) {
     this.pokemonListBattle = listPokemons
     this.helper.getListTypesByPokemon(this.pokemonListBattle).subscribe(results => {
       this.typesDetailPokemon = results
     })
   }
 
-  public cancelBattle(){
+  public cancelBattle() {
     this.showBattle = true
     this.startFight = false
   }
@@ -91,17 +91,15 @@ export class PokemonListComponent implements OnInit {
   /**
    * Fight!!!!
    */
-  public startBattle(){
+  public startBattle() {
     this.startFight = true
     this.pokemonListBattle.map(pokemon => {
       const pokemonFind = this.typesDetailPokemon.find(item => item.id === +pokemon.id)
-      if(pokemonFind){
+      if (pokemonFind) {
         pokemon.damage_relations = pokemonFind.damage_relations
       }
-      return {...pokemon}
+      return { ...pokemon }
     })
-    console.log(this.pokemonListBattle)
-    //console.log(this.pokemonListBattle)
   }
 
 
