@@ -1,0 +1,23 @@
+@import '../../styles/vars'
+.containerSideBar
+    display: flex
+    flex-direction: column
+    width: 100%
+    height: 100%
+    background: $banner-background
+    padding: 10px
+    color: $primary-color
+    .containerItem
+        padding: 0
+        margin: 0
+        li
+            list-style: none
+            padding: 10px
+            &:hover
+                background: $primary-color
+                color: $banner-background
+                cursor: pointer
+        .active
+            background: $primary-color
+            color: $banner-background
+            cursor: pointer

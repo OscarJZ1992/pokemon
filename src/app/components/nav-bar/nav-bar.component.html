@@ -1,0 +1,21 @@
+<div class="containerSideBar">
+  <ul class="containerItem d-flex flex-column">
+    <li
+      class="nav-item"
+      *ngFor="let route of routes"
+      [ngClass]="{ active: route.route === routeSelected.route }"
+    >
+      <div
+        class="d-flex flex-row justify-content-between"
+        (click)="getRouteSelected(route)"
+      >
+        <div>
+          <a class="nav-link">{{ route.title }}</a>
+        </div>
+        <div>
+          <i-bs name="chevron-compact-right" width="20" height="20"> </i-bs>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

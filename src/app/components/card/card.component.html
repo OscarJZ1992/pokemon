@@ -1,0 +1,216 @@
+<div class="containerRows">
+  <div class="d-flex flex-row flex-wrap justify-content-around">
+    <div
+      *ngIf="listPokemons.length === 0"
+      class="d-flex flex-row containerCardNotFound justify-content-center"
+    >
+      <div class="d-flex flex-column align-items-center">
+        <div class="text-secondary mb-3">
+          <i-bs name="emoji-frown" width="75" height="75"> </i-bs>
+        </div>
+        <div>
+          <p class="text-secondary">
+            No pokemon found with the filter performed
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-lg-2 m-2 mb-4 p-2 col-xs-6 containerCard animate__animated"
+      *ngFor="let pokemon of listPokemons"
+      [ngClass]="{ animate__bounceIn: pokemon.name === pokemonHovered.name }"
+      (mouseenter)="hoverPokemon(pokemon)"
+      (mouseleave)="hoverPokemon(pokemon)"
+      (click)="getPokemonSelected(pokemon); getDetailPokemon(pokemon)"
+    >
+      <div class="itemSelected">
+        <span *ngIf="pokemon.selected"
+          ><i-bs name="heart-fill" class="text-danger" width="25" height="25">
+          </i-bs
+        ></span>
+        <span *ngIf="!pokemon.selected"
+          ><i-bs name="heart" width="25" height="25"> </i-bs
+        ></span>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="d-flex flex-row containerImgPokemon">
+          <img
+            [src]="pokemon.img"
+            alt="{{ pokemon.name }}"
+            (click)="openModal(true)"
+          />
+        </div>
+        <div class="d-flex flex-column containerDataPokemon">
+          <div class="containerNamePokemon">
+            <span>{{ pokemon.name | capitalize }}</span>
+          </div>
+          <div class="containerTypePokemon d-flex flex-row">
+            <div class="d-flex flex-row">
+              <div
+                class="circleType"
+                *ngFor="let type of pokemon.type"
+                [ngClass]="
+                  type.type.name === 'bug'
+                    ? 'bug'
+                    : type.type.name === 'electric'
+                    ? 'electric'
+                    : type.type.name === 'fire'
+                    ? 'fire'
+                    : type.type.name === 'grass'
+                    ? 'grass'
+                    : type.type.name === 'normal'
+                    ? 'normal'
+                    : type.type.name === 'rock'
+                    ? 'rock'
+                    : type.type.name === 'dark'
+                    ? 'dark'
+                    : type.type.name === 'fairy'
+                    ? 'fairy'
+                    : type.type.name === 'flying'
+                    ? 'flying'
+                    : type.type.name === 'ground'
+                    ? 'ground'
+                    : type.type.name === 'poison'
+                    ? 'poison'
+                    : type.type.name === 'steel'
+                    ? 'steel'
+                    : type.type.name === 'ice'
+                    ? 'ice'
+                    : type.type.name === 'psychic'
+                    ? 'psychic'
+                    : type.type.name === 'water'
+                    ? 'water'
+                    : type.type.name === 'fighting'
+                    ? 'fighting'
+                    : type.type.name === 'dragon'
+                    ? 'dragon'
+                    : 'transparent'
+                "
+              >
+                {{ type.type.name | capitalize }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #DetailPokemon>
+    <div class="modal-header">
+      <div
+        class="d-flex flex-row justify-content-between containerHeaderModalDetail"
+      >
+        <div
+          class="d-flex flex-row align-items-center animate__animated animate__fadeInDown"
+        >
+          <div>
+            <h4 class="modal-title" id="modal-basic-title">
+              {{ pokemonSelected.name | capitalize }}
+            </h4>
+          </div>
+          <div class="containerPokeBallModalDetail">
+            <img [src]="pokemonSelected.img" alt="" />
+          </div>
+        </div>
+        <div
+          class="flex-row d-flex containerTypePokemon animate__animated animate__fadeInRight"
+        >
+          <div (click)="getPokemonSelected(pokemonSelected)">
+            <span *ngIf="pokemonSelected.selected"
+              ><i-bs
+                name="heart-fill"
+                class="text-danger cursor-pointer"
+                width="25"
+                height="25"
+              >
+              </i-bs
+            ></span>
+            <span *ngIf="!pokemonSelected.selected"
+              ><i-bs
+                class="text-secondary cursor-pointer"
+                name="heart"
+                width="25"
+                height="25"
+              >
+              </i-bs
+            ></span>
+          </div>
+          <div
+            class="circleType"
+            [ngClass]="
+              type.type.name === 'bug'
+                ? 'bug'
+                : type.type.name === 'electric'
+                ? 'electric'
+                : type.type.name === 'fire'
+                ? 'fire'
+                : type.type.name === 'grass'
+                ? 'grass'
+                : type.type.name === 'normal'
+                ? 'normal'
+                : type.type.name === 'rock'
+                ? 'rock'
+                : type.type.name === 'dark'
+                ? 'dark'
+                : type.type.name === 'fairy'
+                ? 'fairy'
+                : type.type.name === 'flying'
+                ? 'flying'
+                : type.type.name === 'ground'
+                ? 'ground'
+                : type.type.name === 'poison'
+                ? 'poison'
+                : type.type.name === 'steel'
+                ? 'steel'
+                : type.type.name === 'ice'
+                ? 'ice'
+                : type.type.name === 'psychic'
+                ? 'psychic'
+                : type.type.name === 'water'
+                ? 'water'
+                : type.type.name === 'fighting'
+                ? 'fighting'
+                : type.type.name === 'dragon'
+                ? 'dragon'
+                : 'transparent'
+            "
+            *ngFor="let type of pokemonSelected.type"
+          >
+            <span>{{ type.type.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <table-stats
+        *ngIf="detailPokemon.stats.length"
+        [dataHeaders]="headers"
+        [dataBody]="detailPokemon.stats"
+        [pokemonSelected]="detailPokemon"
+      ></table-stats>
+    </div>
+    <div class="modal-footer">
+      <div class="flex-row d-flex align-items-center justify-content-between">
+        <div class="readyToFightDetail" *ngIf="pokemonSelected.selected">
+          <span>Ready to fight!!!</span>
+        </div>
+        <div class="containerButtonModalDetail">
+          <button
+            type="button"
+            class="btn btn-outline-dark"
+            (click)="openModal(false)"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <app-modal
+    [openModal]="showModal"
+    (closeModal)="closeModal($event)"
+    [pokemonDetail]="DetailPokemon"
+  ></app-modal>
+</div>

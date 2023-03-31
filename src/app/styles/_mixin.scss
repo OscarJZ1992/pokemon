@@ -1,0 +1,9 @@
+@mixin size-container($width:"", $height:""){
+    width: $width;
+    height: $height
+}
+    
+
+@mixin boxShadow($value_one, $value_two, $value_three, $value_four, $color){
+    box-shadow: $value_one $value_two $value_three $value_four $color
+}

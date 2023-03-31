@@ -1,0 +1,33 @@
+<div>
+  <div class="containerImgModalDetail">
+    <img
+      alt=""
+      class="animate__animated animate__lightSpeedInLeft"
+      [src]="pokemonSelected.img"
+    />
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th
+          *ngFor="let head of headers"
+          [ngClass]="
+            head.name !== 'base_stat' && head.name !== 'effort'
+              ? 'text-right'
+              : 'text-left'
+          "
+        >
+          {{ head.name | capitalize }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of body">
+        <td class="text-right">{{ item.base_stat }}</td>
+        <td class="text-right">{{ item.effort }}</td>
+        <td class="text-left">{{ item.stat.name }}</td>
+        <td class="text-left">{{ item.stat.url }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

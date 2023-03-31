@@ -1,0 +1,4 @@
+@import './colors';
+@function getMapColor($color){
+    @return map-get($palete_colors_pokemon, $color)
+}

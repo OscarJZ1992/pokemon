@@ -1,0 +1,82 @@
+@import '../../styles/mixin'
+@import '../../styles/vars'
+.containerfight
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+    position: absolute
+    z-index: 2
+    width: 100%
+    justify-content: space-evenly
+    background: #656565a3
+    padding: 100px
+    height: 640px
+    top: 0
+    .buttonCombat
+        border-radius: 5px
+        text-align: center
+        align-items: center
+        justify-content: center
+        display: flex
+        padding: 0 30px
+        font-size: 25px
+        background: linear-gradient(141deg, rgb(0 0 0) 0%, rgb(251, 102, 0) 60%, rgb(255, 0, 0) 100%)
+        color: $white-color
+        box-shadow: 0px 0px 17px 19px rgba(255, 110, 2, 0.6196078431)
+        cursor: pointer
+        @include size-container(200px, 52px)
+        right: 500px
+        z-index: 2
+        top: 25%
+        right: 500px
+    .versus
+        font-size: 100px
+        color: #dddd00c4
+    .pokeBallFightLeft, .pokeBallFightRight
+        z-index: 2
+        height: 200px
+        width: 200px
+        background: url("../../../assets/images/Pokeball.png") no-repeat
+        background-position: center
+        background-size: contain
+        img
+            width: 100%
+            height: 100%
+.containerFilters
+    justify-content: space-between
+    padding: 10
+    margin: 10px 35px
+    button
+        margin-left: 10px
+        background: $primary-color
+        color: $white-color
+    .imgFilter
+        width: 25px
+        height: 25px
+        line-height: 2.2
+        margin-left: 10px
+        position: absolute
+        right: 10px
+        img
+            @include size-container(100%, 100%)
+@media (max-width: 499px)
+    .containerFilters
+        flex-direction: column !important
+        .paginator
+            margin-top: 20px
+        .imgFilter
+            right: 210px !important
+    .buttonCombat
+        top: 20% !important
+        right: 140px !important
+    .pokeBallFightLeft
+        top: 20% !important
+        left: 370px !important
+    .pokeBallFightRight
+        top: 20% !important
+        right: 380px !important
+    .modal-dialog
+        width: 430px !important
+        max-width: 430px
+        margin: 0 auto

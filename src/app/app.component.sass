@@ -1,0 +1,13 @@
+@import './styles/vars'
+@import './styles/mixin'
+
+.containerApp
+    .containerRigth
+        .banner
+            background-color: $banner-background
+            @include size-container("", 140px)
+            color: $secondary-color
+            background: url('../assets/images/pokemon_image.png') no-repeat center center fixed
+            background-size: auto 100%
+            background-color: $banner-background
+            background-attachment: scroll

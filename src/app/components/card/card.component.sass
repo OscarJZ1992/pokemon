@@ -1,0 +1,128 @@
+@import '../../styles/vars'
+@import '../../styles/mixin'
+@import '../../styles/functions'
+.bug
+    background-color: getMapColor(--bug)
+.electric
+    background-color: getMapColor(--electric)
+.fire
+    background-color: getMapColor(--fire)
+.grass
+    background-color: getMapColor(--grass)
+.normal
+    background-color: getMapColor(--normal)
+.rock
+    background-color: getMapColor(--rock)
+.dark
+    background-color: getMapColor(--dark)
+.fairy
+    background-color: getMapColor(--fair)
+.flying
+    background-color: getMapColor(--flying)
+.ground
+    background-color: getMapColor(--ground)
+.poison
+    background-color: getMapColor(--poison)
+.steel
+    background-color: getMapColor(--steel)
+.ice
+    background-color: getMapColor(--ice)
+.psychic
+    background-color: getMapColor(--psychic)
+.water
+    background-color: getMapColor(--water)
+.fighting
+    background-color: getMapColor(--fighting)
+.dragon
+    background-color: getMapColor(--dragon)
+
+.containerRows
+    padding: 20px
+    .containerCardNotFound
+        width: 100%
+        background: #eaeaea
+        padding: 100px
+    .containerCard
+        cursor: pointer
+        position: relative
+        border-radius: 5px
+        @include size-container("", 230px)
+        @include boxShadow(0px, 0px, 7px, 0px, $gray-box-shadow-cards)
+        background: linear-gradient(180deg, rgb(100 106 175 / 22%) 0%, rgba(254, 254, 254, 0.66) 50%, rgba(214, 214, 214, 0.42) 100%)
+        .itemSelected
+            position: absolute
+            right: 0
+            padding: 5px
+            top: 0
+        .circleSelected
+            @include size-container(20px, 20px)
+            background: transparent
+            border-radius: 50px
+            border: 1px solid $secondary-color
+    .containerNamePokemon
+        width: auto
+        font-size: 20px
+        top: 0
+        padding: 2px 10px
+        left: 0
+        text-align: right
+        border-bottom-right-radius: 100px
+        border-top-right-radius: 100px
+    .containerTypePokemon
+        color: $white-color
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        position: absolute
+        bottom: 10px
+        right: 20px
+        .circleType
+            border-radius: 5px
+            padding: 2px 15px
+            font-size: 10px
+        .circleType:last-child
+            margin-left: 8px
+        span
+            padding: 2px 15px
+    .containerImgPokemon
+        @include size-container(100%, 150px)
+        img
+            object-fit: contain
+            @include size-container(100%, 100%)
+.containerHeaderModalDetail
+    .containerPokeBallModalDetail
+        @include size-container(30px, 30px)
+        margin-left: 10px
+        img
+            @include size-container("", 100%)
+    .containerTypePokemon
+        color: $white-color
+    .circleType
+        border-radius: 5px
+        padding: 2px 15px
+        font-size: 14px
+    .circleType:last-child
+        margin-left: 8px
+    span
+        padding: 2px 15px
+.modal-footer
+    div
+        @include size-container(100%, "")
+    .containerButtonModalDetail
+        text-align: right
+    .readyToFightDetail
+        text-align: center
+        background: linear-gradient(141deg, rgba(245,255,0,1) 0%, rgba(251,102,0,1) 60%, rgba(255,0,0,1) 100%)
+        color: #fff
+        border-radius: 5px
+        box-shadow: 0px 0px 13px 3px #e96508d6
+
+.containerHeaderModalDetail
+    align-items: center
+    @include size-container(100%, "")
+
+@media (max-width: 499px)
+    .modal-dialog
+        width: 430px !important
+        max-width: 430px
+        margin: 0 auto
