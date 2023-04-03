@@ -32,11 +32,6 @@
           <tbody>
             <tr *ngFor="let result of pokemonListBattle[0].results">
               <td>
-                {{result.propertieDamageFound}} 
-                / 
-                <span *ngFor="let typeEnemy of result.typesEnemyFound">
-                  {{typeEnemy}}
-                </span>
                 <strong>
                   {{
                     result.propertieDamageFound === "double_damage_from" ? "(-70)" : 
@@ -48,6 +43,12 @@
                   
                   }}
                 </strong>
+                PTS
+                {{result.propertieDamageFound}} 
+                / 
+                <span *ngFor="let typeEnemy of result.typesEnemyFound">
+                  {{typeEnemy}}
+                </span>
               </td>
             </tr>
           </tbody>
@@ -94,10 +95,7 @@
         </thead>
           <tbody>
             <tr *ngFor="let result of pokemonListBattle[1].results">
-              <td>{{result.propertieDamageFound}} / 
-                <span *ngFor="let typeEnemy of result.typesEnemyFound">
-                  {{typeEnemy}}
-                </span>
+              <td>
                 <strong>
                   {{
                     result.propertieDamageFound === "double_damage_from" ? "(-70)" : 
@@ -109,6 +107,11 @@
                   
                   }}
                 </strong>
+                PTS
+                {{result.propertieDamageFound}} / 
+                <span *ngFor="let typeEnemy of result.typesEnemyFound">
+                  {{typeEnemy}}
+                </span>
               </td>
             </tr>
           </tbody>
