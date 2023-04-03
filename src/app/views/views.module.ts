@@ -16,6 +16,7 @@ const icons = {
   declarations: [
     PokemonListComponent,
     NotFoundComponent,
+
   ],
   imports: [
     CommonModule,

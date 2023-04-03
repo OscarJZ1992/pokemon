@@ -17,6 +17,42 @@
       <div class="containerHealth" *ngIf="startFight">
         <div class="progresHealth" [ngStyle]="{'width': pokemonListBattle[0].pointsFight > 0 ? pokemonListBattle[0].pointsFight + '%' : 0}">{{pokemonListBattle[0].pointsFight}}%</div>
       </div>
+      <div>
+        <table class="table-hover table table-striped table-results" >
+          <thead>
+            <tr>
+              <th>
+                {{pokemonListBattle[0].name}} - 
+                <span *ngFor="let type of pokemonListBattle[0].type">
+                  {{type.type.name}}
+                </span>
+              </th>
+            </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let result of pokemonListBattle[0].results">
+              <td>
+                {{result.propertieDamageFound}} 
+                / 
+                <span *ngFor="let typeEnemy of result.typesEnemyFound">
+                  {{typeEnemy}}
+                </span>
+                <strong>
+                  {{
+                    result.propertieDamageFound === "double_damage_from" ? "(-70)" : 
+                    result.propertieDamageFound === "double_damage_to" ? "(+70)" :
+                    result.propertieDamageFound === "half_damage_from" ? "(-30)" :
+                    result.propertieDamageFound === "half_damage_to" ? "(+30)" :
+                    result.propertieDamageFound === "no_damage_from" ? "(0)" :
+                    result.propertieDamageFound === "no_damage_to" ? "(0)" : 0
+                  
+                  }}
+                </strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div
       class="buttonCombat animate__animated d-flex flex-column"
@@ -43,6 +79,40 @@
       <img class="animate__animated" [ngClass]="!pokemonListBattle[1].statusFight && pokemonListBattle[0].statusFight ? 'loser' : ''" [src]="pokemonListBattle[1].img" alt="" height="200" width="200" />
       <div class="containerHealth" *ngIf="startFight">
         <div class="progresHealth" [ngStyle]="{'width': pokemonListBattle[1].pointsFight > 0 ? pokemonListBattle[1].pointsFight + '%' : 0}">{{pokemonListBattle[1].pointsFight}}%</div>
+      </div>
+      <div>
+        <table class="table-hover table table-striped table-results" >
+          <thead>
+            <tr>
+              <th>
+                {{pokemonListBattle[1].name}} - 
+                <span *ngFor="let type of pokemonListBattle[1].type">
+                  {{type.type.name}}
+                </span>
+              </th>
+            </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let result of pokemonListBattle[1].results">
+              <td>{{result.propertieDamageFound}} / 
+                <span *ngFor="let typeEnemy of result.typesEnemyFound">
+                  {{typeEnemy}}
+                </span>
+                <strong>
+                  {{
+                    result.propertieDamageFound === "double_damage_from" ? "(-70)" : 
+                    result.propertieDamageFound === "double_damage_to" ? "(+70)" :
+                    result.propertieDamageFound === "half_damage_from" ? "(-30)" :
+                    result.propertieDamageFound === "half_damage_to" ? "(+30)" :
+                    result.propertieDamageFound === "no_damage_from" ? "(0)" :
+                    result.propertieDamageFound === "no_damage_to" ? "(0)" : 0
+                  
+                  }}
+                </strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

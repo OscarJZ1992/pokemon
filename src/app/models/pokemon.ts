@@ -10,7 +10,8 @@ interface POKEMON_DATA {
     type?: TYPE_POKEMON[],
     damage_relations: DAMAGE_RELATIONS[],
     statusFight?: boolean,
-    pointsFight: number
+    pointsFight: number,
+    results?: any[]
 }
 
 interface STAT {

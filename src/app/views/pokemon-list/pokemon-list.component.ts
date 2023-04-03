@@ -133,9 +133,16 @@ export class PokemonListComponent implements OnInit {
     return foundTypeComparate;
   }
 
+  /**
+   * assign results to pokemon
+   * @param resultsComparate assign points final depending key damage
+   */
   public calculatePointsToWinOrFail(resultsComparate: any[]) {
     for (let pokemon of this.pokemonListBattle) {
       pokemon.pointsFight = 0
+      if (!pokemon.results) {
+        pokemon.results = resultsComparate.filter(result => result.pokemonName === pokemon.name)
+      }
       const pokemonFoundResults = resultsComparate.filter(poke => poke.pokemonName === pokemon.name)
       if (pokemonFoundResults.length) {
         let pointsPokemon = 0
@@ -170,6 +177,7 @@ export class PokemonListComponent implements OnInit {
 
     this.pokemonListBattle[0].statusFight = pointsFirstPokemonBattle > pointsSecondPokemonBattle
     this.pokemonListBattle[1].statusFight = pointsSecondPokemonBattle > pointsFirstPokemonBattle
+
   }
 
   /**

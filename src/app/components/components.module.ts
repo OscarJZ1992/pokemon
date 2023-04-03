@@ -39,7 +39,8 @@ const icons = {
   exports: [
     NavBarComponent,
     CardComponent,
-    ModalComponent
+    ModalComponent,
+    TableComponent
   ]
 })
 export class ComponentsModule { }
