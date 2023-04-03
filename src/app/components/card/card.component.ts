@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DETAIL_POKEMON, POKEMON_DATA, STATS } from './../../models/pokemon';
 import { TABLE } from './../../models/table';
 import { HelperPokemon } from 'src/app/helper/helper';
-import { forwardFill } from 'ngx-bootstrap-icons';
 
 @Component({
   selector: 'app-card',
@@ -10,14 +9,14 @@ import { forwardFill } from 'ngx-bootstrap-icons';
   styleUrls: ['./card.component.sass']
 })
 export class CardComponent {
-  
+
   headers: TABLE[] = [{
     name: "base"
-  },{
+  }, {
     name: "effort"
-  },{
+  }, {
     name: "name"
-  },{
+  }, {
     name: "url"
   }]
 
@@ -51,18 +50,22 @@ export class CardComponent {
     url: "",
     id: "",
     img: "",
-    selected: false
+    selected: false,
+    damage_relations: [],
+    pointsFight: 0
   }
   showModal: boolean = false
   pokemonsSelected: POKEMON_DATA[] = []
   listPokemons: POKEMON_DATA[] = [{
-      name: "",
-      url: "",
-      id: "",
-      img: "",
-      selected: false,
-      type: []
-    }
+    name: "",
+    url: "",
+    id: "",
+    img: "",
+    selected: false,
+    type: [],
+    damage_relations: [],
+    pointsFight: 0
+  }
   ]
   pokemonHovered: POKEMON_DATA = {
     name: "",
@@ -70,58 +73,73 @@ export class CardComponent {
     id: "",
     img: "",
     selected: false,
-    type: []
+    type: [],
+    damage_relations: [],
+    pointsFight: 0
   }
 
-  @Input("listPokemon") set getListPokemon(list: POKEMON_DATA[]){
+  @Input("listPokemon") set getListPokemon(list: POKEMON_DATA[]) {
     this.listPokemons = list
   }
 
-  @Input("filterPokemonSearch") set getPokemonSearch(search: string){
+  @Input("filterPokemonSearch") set getPokemonSearch(search: string) {
     this.pokemonSearch = search
   }
 
   @Output() pokemonListBattle = new EventEmitter<any>()
 
-  constructor(private helper: HelperPokemon){}
+  constructor(private helper: HelperPokemon) { }
 
-  public hoverPokemon(pokemon: POKEMON_DATA){
+  public hoverPokemon(pokemon: POKEMON_DATA) {
     this.pokemonHovered = pokemon
   }
 
-  public openModal(value: boolean){
-    if(this.pokemonsSelected.length< 1){
+  public openModal(value: boolean) {
+    if (this.pokemonsSelected.length < 1) {
       this.showModal = value
-    }else{
+    } else {
       this.closeModal(false)
     }
 
   }
 
-  public closeModal(showModal: any){
+  public closeModal(showModal: any) {
     this.showModal = showModal
   }
 
-  public getDetailPokemon(pokemon: POKEMON_DATA){
+  /**
+   * Open modal to details pokemon
+   * @param pokemon 
+   */
+  public getDetailPokemon(pokemon: POKEMON_DATA) {
     this.pokemonSelected = pokemon
-    this.helper.getDetailPokemon([this.pokemonSelected]).subscribe(result =>{
-      this.detailPokemon = {...result[0], img: this.pokemonSelected.img}
+    this.helper.getDetailPokemon([this.pokemonSelected]).subscribe(result => {
+      this.detailPokemon = { ...result[0], img: this.pokemonSelected.img }
     })
-    
+
   }
 
-  public getPokemonSelected(pokemon: POKEMON_DATA){
+  /**
+   * Obtain the pokemon selected in the cards to fight.
+   * Validate if the pokemon exists in the list of selected to fight
+   * @param pokemon 
+   */
+  public getPokemonSelected(pokemon: POKEMON_DATA) {
     const pokemonIsAlready = this.pokemonsSelected.find(poke => poke.id === pokemon.id)
-    if(this.pokemonsSelected.length<2 && !pokemonIsAlready){
+    if (this.pokemonsSelected.length < 2 && !pokemonIsAlready) {
       pokemon.selected = !pokemon.selected
       this.pokemonsSelected.push(pokemon)
-      if(this.pokemonsSelected.length === 2){
-        this.pokemonListBattle.emit(this.pokemonsSelected)
+      if (this.pokemonsSelected.length === 2) {
+        this.pokemonListBattle.emit(this.pokemonsSelected.map(pokemon => {
+          return {
+            ...pokemon
+          }
+        }))
       }
-    }else{
+    } else {
       pokemon.selected = false
       const index = this.pokemonsSelected.findIndex(poke => poke.id === pokemon.id);
-      if(index !== -1){
+      if (index !== -1) {
         this.pokemonsSelected.splice(index, 1)
       };
     }

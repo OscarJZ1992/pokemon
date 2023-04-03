@@ -1,31 +1,30 @@
-import { POKEMON_DATA } from 'src/app/models/pokemon';
 import { Component, Input, ViewChild, TemplateRef, Output, EventEmitter } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
 
 @Component({
-  selector: 'app-modal',
-  template: '',
-  styleUrls: ['./modal.component.sass']
+	selector: 'app-modal',
+	template: '',
+	styleUrls: ['./modal.component.sass']
 })
 export class ModalComponent {
 
-  closeResult = '';
+	closeResult = '';
 
-  @Input()
+	@Input()
 	pokemonDetail!: TemplateRef<any>;
-	
-	@Input("openModal") set openModal(show: boolean){
-		if(show){
+
+	@Input("openModal") set openModal(show: boolean) {
+		if (show) {
 			this.open(this.pokemonDetail)
-		}else{
+		} else {
 			this.modalService.dismissAll()
 		}
 	}
 
 	@Output() closeModal = new EventEmitter<any>();
 
-	constructor(private modalService: NgbModal) {}
+	constructor(private modalService: NgbModal) { }
 
 	open(content: any) {
 		this.modalService.open(content, { ariaLabelledBy: 'pokemonDetail' }).result.then(

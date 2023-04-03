@@ -22,6 +22,10 @@ Run the command `npm i` in the root of the project
 
 Run `ng serve --open` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
+## Run Windows 11 or Mac
+
+Run `ng serve --open --poll=2000` checks every 2000ms for changes 
+
 
 ## Build
 

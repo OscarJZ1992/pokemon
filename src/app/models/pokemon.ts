@@ -8,21 +8,24 @@ interface POKEMON_DATA {
     img: string
     selected: boolean,
     type?: TYPE_POKEMON[],
-    damage_relations?: [DAMAGE_RELATIONS]
+    damage_relations: DAMAGE_RELATIONS[],
+    statusFight?: boolean,
+    pointsFight: number
 }
 
-interface STAT{
+interface STAT {
     name: string,
     url: string
 }
 
-interface STATS{
+interface STATS {
     base_stat: number,
     effort: number,
     stat: STAT
 }
 
-interface DAMAGE_RELATIONS{
+interface DAMAGE_RELATIONS {
+    [index: string]: any
     double_damage_from: [STAT]
     double_damage_to: [STAT]
     half_damage_from: [STAT]
@@ -55,7 +58,7 @@ interface DETAIL_POKEMON {
 
 }
 
-export{
+export {
     POKEMON_DATA,
     DETAIL_POKEMON,
     STATS,

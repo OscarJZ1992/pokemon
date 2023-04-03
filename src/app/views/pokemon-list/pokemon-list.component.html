@@ -1,24 +1,49 @@
 <div class="position-relative" *ngIf="pokemonListBattle.length === 2">
   <div class="d-flex flex-row containerfight">
+    <div class="d-flex flex-row containerStatusFight">
+      <div> 
+        <span *ngIf="pokemonListBattle[0].statusFight && !pokemonListBattle[1].statusFight ? 'loser' : ''" class="text_winner">Winner</span>
+      </div>
+      <div>
+        <span *ngIf="!pokemonListBattle[0].statusFight && pokemonListBattle[1].statusFight ? 'loser' : ''" class="text_loser">Loser</span>
+      </div>
+    </div>
     <div
       *ngIf="pokemonListBattle.length === 2"
       class="pokeBallFightLeft animate__animated animate__bounceInLeft"
+      
     >
-      <img [src]="pokemonListBattle[0].img" alt="" height="200" width="200" />
+      <img class="animate__animated" [ngClass]="!pokemonListBattle[0].statusFight && pokemonListBattle[1].statusFight ? 'loser' : ''"  [src]="pokemonListBattle[0].img" alt="" height="200" width="200" />
+      <div class="containerHealth" *ngIf="startFight">
+        <div class="progresHealth" [ngStyle]="{'width': pokemonListBattle[0].pointsFight > 0 ? pokemonListBattle[0].pointsFight + '%' : 0}">{{pokemonListBattle[0].pointsFight}}%</div>
+      </div>
     </div>
     <div
       class="buttonCombat animate__animated d-flex flex-column"
       *ngIf="pokemonListBattle.length === 2"
       [ngClass]="{ animate__zoomInDown: pokemonListBattle.length === 2 }"
     >
-      <div class="versus" (click)="startBattle()">VS</div>
-      <div (click)="pokemonListBattle = []; cancelBattle()">Cancelar</div>
+      <div class="versus" (click)="startBattle()" *ngIf="!startFight">Start Fight</div>
+      <div class="versus" (click)="cancelBattle()" *ngIf="startFight && pokemonListBattle[0].statusFight || pokemonListBattle[1].statusFight">Finish</div>
+      <div class="versus" (click)="cancelBattle()" *ngIf="startFight && !pokemonListBattle[0].statusFight && !pokemonListBattle[1].statusFight && pokemonListBattle[0].pointsFight ===  pokemonListBattle[1].pointsFight">TIE!</div>
+      <div (click)="pokemonListBattle = []; cancelBattle()" class="buttonCancel">Cancel fight</div>
     </div>
     <div
       *ngIf="pokemonListBattle.length === 2"
       class="animate__animated animate__bounceInRight pokeBallFightRight"
     >
-      <img [src]="pokemonListBattle[1].img" alt="" height="200" width="200" />
+    <div class="d-flex flex-row containerStatusFight">
+      <div>
+        <span *ngIf="pokemonListBattle[1].statusFight && !pokemonListBattle[0].statusFight ? 'loser' : ''" class="text_winner">Winner</span>
+      </div>
+      <div>
+        <span *ngIf="!pokemonListBattle[1].statusFight && pokemonListBattle[0].statusFight ? 'loser' : ''" class="text_loser">Loser</span>
+      </div>
+    </div>
+      <img class="animate__animated" [ngClass]="!pokemonListBattle[1].statusFight && pokemonListBattle[0].statusFight ? 'loser' : ''" [src]="pokemonListBattle[1].img" alt="" height="200" width="200" />
+      <div class="containerHealth" *ngIf="startFight">
+        <div class="progresHealth" [ngStyle]="{'width': pokemonListBattle[1].pointsFight > 0 ? pokemonListBattle[1].pointsFight + '%' : 0}">{{pokemonListBattle[1].pointsFight}}%</div>
+      </div>
     </div>
   </div>
 </div>

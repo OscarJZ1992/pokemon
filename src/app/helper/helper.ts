@@ -7,8 +7,8 @@ import { API_URL } from "../utils/constants";
 @Injectable({
     providedIn: 'root'
 })
-export class HelperPokemon{
-constructor(private services: ServicesService) {}
+export class HelperPokemon {
+    constructor(private services: ServicesService) { }
 
     types: any[] = []
     /**
@@ -18,7 +18,7 @@ constructor(private services: ServicesService) {}
      * @returns List of pokemon
      */
 
-    private getImageByPokemon = (idPokemon: string): string =>{
+    private getImageByPokemon = (idPokemon: string): string => {
         return `../../assets/images/pokemons/151_pokemon/${idPokemon}.png`
     }
 
@@ -41,36 +41,81 @@ constructor(private services: ServicesService) {}
      * @returns pokemon list formated with id and img
      */
     public getIdByPokemon = (pokemones: POKEMON_DATA[]) => {
-        return pokemones.map(({url, name}) => {
+        return pokemones.map(({ url, name }) => {
             //access to the six element (Id) pokemon
             const idPokemon = parseInt(url.split("/")[6])
-            return { id: this.formatIdPokemon(idPokemon), img: this.getImageByPokemon(this.formatIdPokemon(idPokemon)),name, url, selected: false }
+            return { id: this.formatIdPokemon(idPokemon), img: this.getImageByPokemon(this.formatIdPokemon(idPokemon)), name, url, selected: false, damage_relations: [], statusFight: false, pointsFight: 0 }
         })
     }
 
-    public getDetailPokemon(pokemones: POKEMON_DATA[]){
+    public getDetailPokemon(pokemones: POKEMON_DATA[]) {
         const requests = []
-        for(let i=0; i<pokemones.length; i++){
+        for (let i = 0; i < pokemones.length; i++) {
             requests.push(this.services.getDetailPokemon(`${API_URL.LIST_POKEMON}/${pokemones[i].name}/`))
         }
         return forkJoin(requests);
     }
 
-    public getTypesPokemon(pokemones: POKEMON_DATA[], typesPokemon: DETAIL_POKEMON[]){
-        return pokemones.map((pokemon,index)=>{
-            pokemon.type = typesPokemon[index].name === pokemon.name ? typesPokemon[index].types : []
-            return {...pokemon}
+    /**
+     * Function to associate to the pokemon list each of its types.
+     * @param pokemones 
+     * @param pokemonDetail The pokemon detail brings the types to which it is related.
+     * @returns 
+     */
+    public getTypesPokemon(pokemones: POKEMON_DATA[], pokemonDetail: DETAIL_POKEMON[]) {
+        return pokemones.map((pokemon, index) => {
+            pokemon.type = pokemonDetail[index].name === pokemon.name ? pokemonDetail[index].types : []
+            return { ...pokemon }
         })
     }
 
-    public getListTypesByPokemon(pokemones: POKEMON_DATA[]){
+    /**
+     * Obtains the names of the pokemon types and consults the type details.
+     * @param pokemones 
+     * @returns 
+     */
+    public getListTypesByPokemon(pokemones: POKEMON_DATA[]) {
         const requests = []
-        for(let i=0; i<pokemones.length; i++){
-            requests.push(this.services.getTypesByPokemon(`${API_URL.TYPE_POKEMON}/${+pokemones[i].id}/`))
+        for (let i = 0; i < pokemones.length; i++) {
+            const typesListPokemon = Object.assign([], pokemones[i].type)
+            for (let j = 0; j < typesListPokemon.length; j++) {
+                requests.push(this.services.getTypesByPokemon(`${API_URL.TYPE_POKEMON}/${typesListPokemon[j]["type"]["name"]}/`))
+            }
         }
         return forkJoin(requests);
-        
-    }   
+
+    }
+
+    /**
+     * Receive pokemons list battle and listPokemonTypes,
+     * Also damage_releations are associated to each pokemon
+     */
+    public getPokemonsWithDamageRelations(listPokemonsBattle: POKEMON_DATA[], listPokemonTypes: any[]) {
+        let temporalTypes: any[] = []
+        for (let i = 0; i < listPokemonsBattle.length; i++) {
+            if (!listPokemonsBattle[i].damage_relations.length) {
+                for (let x = 0; x < listPokemonTypes.length; x++) {
+                    if (listPokemonsBattle[i]["type"]?.find(poke => poke.type.name === listPokemonTypes[x].name)) {
+                        /**
+                         * This following validation allows me to verify if two pokemon of the same type are already processed, 
+                         * so as not to duplicate the type information of the processed pokemon.
+                         */
+                        if (!listPokemonsBattle[i].damage_relations?.length || !temporalTypes.find(poke => listPokemonsBattle[i].name === poke.pokemonName && poke.typesProcessed == listPokemonTypes[x].name)) {
+                            listPokemonsBattle[i].damage_relations?.push(listPokemonTypes[x].damage_relations)
+                            temporalTypes.push({
+                                pokemonName: listPokemonsBattle[i].name,
+                                typesProcessed: listPokemonTypes[x].name
+                            })
+                        }
+                    }
+                }
+            } else {
+                continue
+            }
+        }
+        return listPokemonsBattle;
+    }
+
 
 
 }

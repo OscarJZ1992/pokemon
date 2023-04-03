@@ -8,12 +8,31 @@
     position: absolute
     z-index: 2
     width: 100%
-    justify-content: space-evenly
+    justify-content: space-between
     background: #656565a3
     padding: 100px
     height: 640px
     top: 0
-    .buttonCombat
+    .containerStatusFight
+        font-size: 40px
+        color: $white-color
+    .containerHealth
+        background: #ff4444
+    .progresHealth
+        background: #60ff60
+        text-align: center
+    .loser
+        transform: rotate(180deg)
+    .text_loser, .text_winner
+        position: absolute
+        z-index: 3
+        background: rgb(255 255 255 / 68%)
+        border-radius: 10px
+    .text_loser
+        color: #ff4444
+    .text_winner
+        color: #1ba61b
+    .versus
         border-radius: 5px
         text-align: center
         align-items: center
@@ -23,16 +42,22 @@
         font-size: 25px
         background: linear-gradient(141deg, rgb(0 0 0) 0%, rgb(251, 102, 0) 60%, rgb(255, 0, 0) 100%)
         color: $white-color
-        box-shadow: 0px 0px 17px 19px rgba(255, 110, 2, 0.6196078431)
+        box-shadow: 0px 0px 16px 10px rgba(255, 110, 2, 0.61)
         cursor: pointer
         @include size-container(200px, 52px)
         right: 500px
         z-index: 2
         top: 25%
         right: 500px
-    .versus
-        font-size: 100px
         color: #dddd00c4
+    .buttonCancel
+        text-align: center
+        margin-top: 10px
+        color: white
+        cursor: pointer
+        transition: transform 0.2s ease-in-out
+        &:hover
+            transform: scale(1.2)
     .pokeBallFightLeft, .pokeBallFightRight
         z-index: 2
         height: 200px
